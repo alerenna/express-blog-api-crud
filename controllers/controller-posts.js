@@ -1,11 +1,29 @@
 const posts = require('../data/posts')
 
 function index(req,res) {
-    res.send('Show all the posts here');
+
+    let postsFiltered = posts
+
+    if (req.query.tag) {
+        postsFiltered = posts.filter(post => post.tags.includes(req.query.tag))
+    }
+    
+    res.json(postsFiltered);
 }
 
-function show(req,res) {
-    res.send(`Show post with slug: ${req.params.slug}`);
+function show(req,res) { 
+    const post = posts.find(post => post.slug === req.params.id)
+
+    if (!post) {
+        return res.status(404).json({
+            error: 'Error 404',
+            message: 'Post not found'
+        })
+    }
+
+    res.json(post)
+
+
 }
 
 function store(req,res) {
@@ -21,7 +39,21 @@ function modify(req,res) {
 }
 
 function destroy(req,res) {
-    res.send(`Delete post with slug: ${req.params.slug}`);
+    const post = posts.find(post => post.slug === req.params.id)
+
+    if (!post) {
+        return res.status(404).json({
+            error: 'Error 404',
+            message: 'Post not found'
+        })
+    }
+
+    posts.splice(posts.indexOf(post), 1)
+
+    console.log(posts);
+    
+    res.sendStatus(204)
+
 }
 
 module.exports = {
