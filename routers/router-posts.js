@@ -1,34 +1,23 @@
 const express = require('express')
 const router = express.Router()
+const postsController = require('../controllers/controller-posts')
 
 //Index
-router.get('/', (req,res) => {
-    res.send('Show all the posts here');
-})
+router.get('/', postsController.index)
 
 //Show
-router.get('/:id', (req,res) => {
-    res.send(`Show post with slug: ${req.params.slug}`);
-})
+router.get('/:id', postsController.show)
 
 //Store
-router.post('/', (req,res) => {
-    res.send('Add a post');
-})
+router.post('/',postsController.store)
 
 //Update
-router.put('/:id', (req,res) => {
-    res.send(`Update post with slug: ${req.params.slug}`);
-})
+router.put('/:id', postsController.update)
 
 //Modify
-router.patch('/:id', (req,res) => {
-    res.send(`Modify post with slug: ${req.params.slug}`);
-})
+router.patch('/:id', postsController.modify)
 
 //Destroy
-router.delete('/:id', (req,res) => {
-    res.send(`Delete post with slug: ${req.params.slug}`);
-})
+router.delete('/:id', postsController.destroy)
 
 module.exports = router
