@@ -28,9 +28,17 @@ function show(req,res) {
 
 function store(req,res) {
 
+    function generateSlug(title) {
+        return title
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+    } 
+
+    const newSlug = generateSlug(req.body.title)
+
     const newPost = {
         title: req.body.title,
-        slug: req.body.slug,
+        slug: newSlug,
         content: req.body.content,
         image: req.body.image,
         tags: req.body.image
@@ -47,6 +55,15 @@ function store(req,res) {
 }
 
 function update(req,res) {
+    function generateSlug(title) {
+        return title
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+    } 
+
+    const newSlug = generateSlug(req.body.title)
+
+
     const post = posts.find(post => post.slug === req.params.id)
 
     if (!post) {
@@ -57,7 +74,7 @@ function update(req,res) {
     }
 
     post.title = req.body.title
-    post.slug = req.body.slug
+    post.slug = newSlug
     post.content = req.body.content
     post.image = req.body.image
     post.tags = req.body.tags
