@@ -27,7 +27,23 @@ function show(req,res) {
 }
 
 function store(req,res) {
-    res.send('Add a post');
+
+    const newPost = {
+        title: req.body.title,
+        slug: req.body.slug,
+        content: req.body.content,
+        image: req.body.image,
+        tags: req.body.image
+    }
+
+    posts.push(newPost)
+
+    console.log(posts);
+
+    res.status(201)
+
+    res.json(newPost)
+    
 }
 
 function update(req,res) {
